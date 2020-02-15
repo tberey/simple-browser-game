@@ -16,14 +16,15 @@ Replace document.getElementById('') & document.getElementsByClassName('') with $
 	alert(document.getElementById('abc123').innerHTML);
 	*/
 
-Maybe change the game to a pick-up the ball and drop: Certain players/imgs will hurt the mouse, whilst others will hurt the ball. Having to drop and pickup ball working together with both ideas. Due to current problem with players not hitting the ball (except for one that's specified), have a bigger moving image that can only hit the ball to take lives. Would require removing pitch and adding a new bigger moving image *this image being the one that can hit the ball, with smaller img's hitting the mouse, which currently ALL Players do.
-	/*
-	$('#imageBall').draggable();
-	*/
+Maybe add a basketball variation to the game: pick-up the ball and drop: $('#imageBall').draggable();
 
 Make use of cnavas html5 tag?
 
-Add default enemy/player formation plus a drop down to set a choice of formations. Pass value of dropdown into function for conditions to set css props.
+Add a drop down to set a choice of formations. Pass value of dropdown into function for conditions to set css props. Make default positions that they're in now one formation, then add another (label them e.g. 4-3-2-2). The options dropdown is on when start is pressed the formation that will be used (with no empty option)
+
+90 Seconds of time adds new random set of lives to exisitng (& speed up passing of time).
+
+Using interception check function: check for players/enemies and ref colliding to then have pop up/flash side text/match log div that generates match-like text, e.g. ref talking to a player for warning. [interactive text]
 -->
 
 <html>
@@ -74,17 +75,17 @@ Add default enemy/player formation plus a drop down to set a choice of formation
 			<img id="imageBall" src="resources/football-icon-65993.png" alt="O">
 			
 			<nav class="squad">
-				<img id="imagePlayer0" class="enemy" src="resources/playerCircleIcon.png" alt="E0">
-				<img id="imagePlayer1" class="enemy" src="resources/playerCircleIcon.png" alt="E1">
-				<img id="imagePlayer2" class="enemy" src="resources/playerCircleIcon.png" alt="E2">
-				<img id="imagePlayer3" class="enemy" src="resources/playerCircleIcon.png" alt="E3">
-				<img id="imagePlayer4" class="enemy" src="resources/playerCircleIcon.png" alt="E4">
-				<img id="imagePlayer5" class="enemy" src="resources/playerCircleIcon.png" alt="E5">
-				<img id="imagePlayer6" class="enemy" src="resources/playerCircleIcon.png" alt="E6">
-				<img id="imagePlayer7" class="enemy" src="resources/playerCircleIcon.png" alt="E7">
-				<img id="imagePlayer8" class="enemy" src="resources/playerCircleIcon.png" alt="E8">
-				<img id="imagePlayer9" class="enemy" src="resources/playerCircleIcon.png" alt="E9">
-				<img id="imagePlayer10" class="enemy" src="resources/playerCircleIcon.png" alt="E10">
+				<img id="imagePlayer0" class="enemy" src="resources/playerCircleIcon.png" alt="E0" style="right: 45%; top: 10%;">
+				<img id="imagePlayer1" class="enemy" src="resources/playerCircleIcon.png" alt="E1" style="right: 45%; top: 27%;">
+				<img id="imagePlayer2" class="enemy" src="resources/playerCircleIcon.png" alt="E2" style="right: 24%; top: 30%;">
+				<img id="imagePlayer3" class="enemy" src="resources/playerCircleIcon.png" alt="E3" style="right: 6%; top: 35%;">
+				<img id="imagePlayer4" class="enemy" src="resources/playerCircleIcon.png" alt="E4" style="left: 24%; top: 30%;">
+				<img id="imagePlayer5" class="enemy" src="resources/playerCircleIcon.png" alt="E5" style="left: 6%; top: 35%;">
+				<img id="imagePlayer6" class="enemy" src="resources/playerCircleIcon.png" alt="E6" style="right: 35%; top: 48%;">
+				<img id="imagePlayer7" class="enemy" src="resources/playerCircleIcon.png" alt="E7" style="left: 35%; top: 48%;">
+				<img id="imagePlayer8" class="enemy" src="resources/playerCircleIcon.png" alt="E8" style="right: 17%; top: 65%;">
+				<img id="imagePlayer9" class="enemy" src="resources/playerCircleIcon.png" alt="E9" style="left: 17%; top: 65%;">
+				<img id="imagePlayer10" class="enemy" src="resources/playerCircleIcon.png" alt="E10" style="right: 45%; top: 80%;">
 			</nav>
 		</div>
 		

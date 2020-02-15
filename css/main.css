@@ -121,10 +121,8 @@ div[id="dialog"] {
 img[id*="imagePlayer"] {
     position: absolute;
     margin: 0;
-    height: 10%;
-    width: 10%;
+    height:8%;
+    width: 8%;
     z-index: 3;
     display: none;
-    /* top: 50%;
-    right: 50%; */
 }
