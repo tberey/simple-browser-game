@@ -1,0 +1,130 @@
+html, body {
+    background-color: #A4FB4D;
+    font-family: 'Stalinist One'; 
+}
+
+select {
+    width: 100%;
+    height: 5vh;
+    border: none;
+    border-radius: 20px;
+    background-color: green;
+    font-family: 'Stalinist One';
+    font-size: 1.5vh;
+    padding-left: 1%;
+}
+
+#projPlaceholder {
+    margin: 0 auto;
+    height: 80vh;
+    width: 90vw;
+    background-color: #cff5ab;
+    font-size: 2.2vh;
+    cursor: crosshair;
+    position: relative;
+    z-index: 1;
+    /* Disables highlighting for any of the elements in this class. Each is a different browser compatibility. */
+    -webkit-touch-callout: none; /* iOS Safari. */
+    -webkit-user-select: none; /* Safari. */
+    -moz-user-select: none; /* Older Versions of Firefox. */
+    -ms-user-select: none; /* IE/Edge. */
+    user-select: none; /* Chrome, Opera and Firefox. */
+}
+
+#imageBall {
+    position: absolute;
+    pointer-events: none;
+    z-index: 2;
+    margin: 0;
+    width: 5%;
+    height: 5%;
+}
+
+img#objectA {
+    width: 10%;
+    height: 10%;
+    background-color: white;
+    position: absolute;
+    z-index: 4;
+    display: none;
+    margin: 0;
+    border-radius: 500px;
+}
+
+.inGameText {
+    z-index: 5;
+    width:25%;
+    white-space: nowrap;
+}
+
+/* Dynamic Button Functionality begins here. Adds styling for when the button is interacted with, i.e. When the mouse hovers over it etc. */
+.startButton {
+    display: inline-block;
+    font-family: 'Stalinist One';
+    font-size: 2vh;
+    padding-bottom: 1vh;
+    padding-top: 1vh;
+    cursor: pointer;
+    text-align: center;
+    outline: none;
+    color: #016319;
+    background-color: #03fc3d;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 1vh #01260a;
+    float: right;
+    height: 5vh;
+    width: 20vw;
+}
+
+/* 'Start' version of the 'startButton' (hovering effects). */
+.startButton:hover {
+    background-color: #3e8e41 !important;
+}
+
+/* 'Start' version of the 'startButton'. */
+.startButton:active {
+    background-color: #3e8e41 !important;
+    box-shadow: 0 1vh #666;
+    transform: translateY(4px);
+}
+
+/* 'Quit' version of the 'startButton' (hovering effects). */
+button:hover[label="quitB"] {
+    background-color: #4D0404 !important;
+}
+
+/* 'Quit' version of the 'startButton'. */
+button[label="quitB"] {
+    background-color: #C61010 !important;
+}
+
+/* Dialog Pop-up: Title Bar Properties. */
+span[id="ui-id-1"] {
+    background-color: #80ff80 !important;
+    color: #006600 !important;
+    font-family: 'Stalinist One';
+    text-align: center;
+}
+
+/* Dialog Pop-up: The Alert Box Parent Element - Outer Border (and the whole of the dialog box behind the text box/title bar) Properties. */
+div[id="dialog"] {
+    background-color: #80ff80 !important;
+    color: #006600 !important;
+    font-family: 'Stalinist One';
+    text-align: center;
+    display: none;
+    font-size: 50px;
+}
+
+/* Targets all img tags that have an id at least inclusive of the string 'imagePlayer'. */
+img[id*="imagePlayer"] {
+    position: absolute;
+    margin: 0;
+    height: 10%;
+    width: 10%;
+    z-index: 3;
+    display: none;
+    /* top: 50%;
+    right: 50%; */
+}
