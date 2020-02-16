@@ -7,6 +7,7 @@ var _roundNo;
 var _numberOfLives = 0;
 var _highScore = 0;
 var gameInSession = false;
+var twoGuards = false;
 var startButtonVar = document.getElementsByClassName('startButton')[0]; // This 0th index of the query selected array.
 var projPlaceholderVar = document.getElementById('projPlaceholder');
 var livesVar = document.getElementById('lives');
@@ -14,7 +15,6 @@ var distanceVar = document.getElementById('distance');
 var roundsVar = document.getElementById('rounds');
 var gameTimeS = document.getElementById('timer');
 var highScoreField = document.getElementById('highScore');
-var objectElement = document.getElementById('objectA');
 var squadSelected = document.getElementsByClassName('squad')[0].getElementsByTagName('img');
 
 // Small intervaled function that gets browser's local date & time, and updated every second (and dynamically displayed in page, through concatenation).
@@ -30,6 +30,7 @@ else window.onload = initialised;
 
 // This function is called when the page is ready, and contains the event listeners which will listen for, and control, some of the game's actions. Moreover the generated Hex code is applied to the background color here, after it has generated a random hex value by calling the 'hexColour' function. Furthermore, this function updates the displayed values with any initialised variables. Finally, it also contains start/quit game button controls.
 livesVar.innerHTML = `Lives: ${_numberOfLives}`; // Leave outside 'initialised' for score/game over display - only needs init once on page load.
+enemyFormation(); // Init formation on page load.
 function initialised() {
     // Initialise variables/display.
     _distanceScore = 0;
@@ -40,14 +41,26 @@ function initialised() {
     roundsVar.innerHTML = `Round: ${_roundNo}`;
     gameTimeS.innerHTML = `${_totalSeconds} secs`;
     highScoreField.innerHTML = `High Score: ${_highScore}`;
-    projPlaceholderVar.style.background = '#cff5ab';
+    projPlaceholderVar.style.background = '#7e000a';
     projPlaceholderVar.style.color = 'black';
     livesVar.style.color = 'black';
     
     // Event listener for input box, to updates object's speed for the next motion.
     document.getElementById('speedInputField').addEventListener('change', function() {
         objectA._setSpeed(parseInt(this.value)); // Parses inputted value as an integer (to output an integer value), and runs '_setSpeed' setter method to set value.
+        objectB._setSpeed(parseInt(this.value));
     });
+
+    // Event listener for input box, to updates object's speed for the next motion.
+    document.getElementById('formationField').addEventListener('change', function() {
+        enemyFormation(this.value); // Parses inputted value as an integer (to output an integer value), and runs '_setSpeed' setter method to set value.
+    });
+
+    document.getElementById('guardsField').addEventListener('change', function() {
+        twoGuards = parseInt(this.value);
+    });
+
+    return;
 }
 
 startButtonVar.addEventListener('click', () => {
@@ -71,6 +84,7 @@ function startGame() {
     clearInterval(gameOverText);
     gameTimerDialogBox();
     objectA.start();
+    if (twoGuards) objectB.start();
     
     projPlaceholderVar.addEventListener('mousemove', mouseTracking); // Calls 'mouseTracking' function, whenever the mouse is moved inside the div.
     projPlaceholderVar.addEventListener('click', roundOfGame);
@@ -79,6 +93,7 @@ function startGame() {
         squadSelected[i].addEventListener('mouseover', roundOfGame);
         squadSelected[i].style.display = 'block';
     }
+    document.getElementById('imageBall').style.display = 'block';
     return;
 }
 
@@ -90,6 +105,7 @@ function quitGame() {
 
     clearInterval(inGameTime); // Stops the in-game timer.
     objectA.stop();
+    objectB.stop();
     initialised();
     
     projPlaceholderVar.removeEventListener('mousemove', mouseTracking); // Removes event listener for when the mouse is moved inside the div.
@@ -99,6 +115,7 @@ function quitGame() {
         squadSelected[i].removeEventListener('mouseover',roundOfGame);
         squadSelected[i].style.display = 'none';
     }
+    document.getElementById('imageBall').style.display = 'none';
     return;
 }
 
@@ -114,7 +131,7 @@ function gameTimerDialogBox() {
     setTimeout(function() {
         $('#dialog').dialog('close'); // Close the New Game pop-up dialog box (jQuery).
         startButtonVar.disabled = false;
-    }, 1250);
+    }, 1200);
     
     _totalSeconds = 0; // Init the total seconds accumulated, before beginning any count again.
     
@@ -237,34 +254,85 @@ function roundOfGame() {
     }
 }
 
-function enemyFormation() {
-    var containerHeight = $('#projPlaceholder').height() - 80;
-    var containerWidth = $('#projPlaceholder').width() - 50;
-    
-    var textContainerHeight = $('.inGameText').height();
-    var textContainerWidth = $('.inGameText').width();
-    
-    
-    function randomHeight(min, max) {
-        return min + Math.random() * (max - min);
-    }
+function enemyFormation(formationVal='541') { // Set css style properties, conditional based on formation selected from dropdown on page. With testing randomise
+    switch(formationVal) {
+        case '541':
+
+            document.getElementById('imagePlayer0').style.right = '45%';
+            document.getElementById('imagePlayer0').style.top = '10%';
+            document.getElementById('imagePlayer1').style.right = '45%';
+            document.getElementById('imagePlayer1').style.top = '27%';
+            document.getElementById('imagePlayer2').style.right = '24%';
+            document.getElementById('imagePlayer2').style.top = '30%';
+            document.getElementById('imagePlayer3').style.right = '6%';
+            document.getElementById('imagePlayer3').style.top = '35%';
+            document.getElementById('imagePlayer4').style.right = '67%';
+            document.getElementById('imagePlayer4').style.top = '30%';
+            document.getElementById('imagePlayer5').style.right = '86%';
+            document.getElementById('imagePlayer5').style.top = '35%';
+            document.getElementById('imagePlayer6').style.right = '35%';
+            document.getElementById('imagePlayer6').style.top = '48%';
+            document.getElementById('imagePlayer7').style.right = '55%';
+            document.getElementById('imagePlayer7').style.top = '48%';
+            document.getElementById('imagePlayer8').style.right = '17%';
+            document.getElementById('imagePlayer8').style.top = '65%';
+            document.getElementById('imagePlayer9').style.right = '73%';
+            document.getElementById('imagePlayer9').style.top = '65%';
+            document.getElementById('imagePlayer10').style.right = '45%';
+            document.getElementById('imagePlayer10').style.top = '80%';
+            break;
+        
+        case '343':
+            document.getElementById('imagePlayer0').style.right = '45%';
+            document.getElementById('imagePlayer0').style.top = '10%';
+            document.getElementById('imagePlayer1').style.right = '45%';
+            document.getElementById('imagePlayer1').style.top = '30%';
+            document.getElementById('imagePlayer2').style.right = '20%';
+            document.getElementById('imagePlayer2').style.top = '30%';
+            document.getElementById('imagePlayer3').style.right = '70%';
+            document.getElementById('imagePlayer3').style.top = '30%';
+            document.getElementById('imagePlayer4').style.right = '78%';
+            document.getElementById('imagePlayer4').style.top = '55%';
+            document.getElementById('imagePlayer5').style.right = '12%';
+            document.getElementById('imagePlayer5').style.top = '55%';
+            document.getElementById('imagePlayer6').style.right = '35%';
+            document.getElementById('imagePlayer6').style.top = '55%';
+            document.getElementById('imagePlayer7').style.right = '55%';
+            document.getElementById('imagePlayer7').style.top = '55%';
+            document.getElementById('imagePlayer8').style.right = '17%';
+            document.getElementById('imagePlayer8').style.top = '80%';
+            document.getElementById('imagePlayer9').style.right = '73%';
+            document.getElementById('imagePlayer9').style.top = '80%';
+            document.getElementById('imagePlayer10').style.right = '45%';
+            document.getElementById('imagePlayer10').style.top = '80%';
+            break;
+        
+        case 'random':
+            var containerHeight = $('#projPlaceholder').height();
+            var containerWidth = $('#projPlaceholder').width();
             
-    for (let i=0; i < squadSelected.length; i++) {
-        //squadSelected[i].style.top = Math.floor((Math.random() * (containerHeight - textContainerHeight) + textContainerHeight) / containerHeight * 100) + '%';
-        squadSelected[i].style.top = randomHeight(textContainerHeight, containerHeight) + 'px';
-        //alert(squadSelected[i].style.top);
-        //alert(squadSelected[i].style.top);
-        //squadSelected[i].style.left = Math.floor((Math.random() * (containerHeight - textContainerHeight) + textContainerHeight) / containerHeight * 100) + '%';
-        squadSelected[i].style.left = randomHeight(textContainerWidth, containerWidth) + 'px';
-        
-        /*if (i > 1 && squadSelected[i-1].style.top == squadSelected[i].style.top) {
-            squadSelected[i].style.top = '' + (Math.floor(Math.random()* 100) +1) + '%';
-        }
-        
-        squadSelected[i].style.left = '' + (Math.floor(Math.random()* 100) +1) + '%';
-        if (i > 1 && squadSelected[i-1].style.left == squadSelected[i].style.left) {
-            squadSelected[i].style.left = '' + (Math.floor(Math.random()* 100) +1) + '%';
-        }*/
+            var textContainerHeight = $('.inGameText').height();
+            var textContainerWidth = $('.inGameText').width();
+            
+            
+            function randomHeight(min, max) {
+                return min + Math.random() * (max - min);
+            }
+            
+            for (let i=0; i < squadSelected.length; i++) {
+                //squadSelected[i].style.top = Math.floor((Math.random() * (containerHeight - textContainerHeight) + textContainerHeight) / containerHeight * 100) + '%';
+                squadSelected[i].style.top = randomHeight(textContainerHeight, containerHeight) + 'px';
+                //alert(squadSelected[i].style.top);
+                //alert(squadSelected[i].style.top);
+                //squadSelected[i].style.right = Math.floor((Math.random() * (containerHeight - textContainerHeight) + textContainerHeight) / containerHeight * 100) + '%';
+                squadSelected[i].style.right = randomHeight(textContainerWidth, containerWidth) + 'px';
+                
+                if (i > 0 && squadSelected[i-1].style.top == squadSelected[i].style.top && squadSelected[i-1].style.right == squadSelected[i].style.right) {
+                    squadSelected[i].style.top = '' + (Math.floor(Math.random()* 100) +1) + '%';
+                    squadSelected[i].style.right = '' + (Math.floor(Math.random()* 100) +1) + '%';
+                }
+            }
+            break;
     }
 }
 
@@ -284,7 +352,8 @@ function mouseTracking(e) { // Passes 'e' event object into the function when ca
 // Checks for collisions in the two query selected elements that are passed into the 'interceptionCheck' function, as arguments, via a short intervaled timer. This happens from calling the text() method with the nested 'interceptionCheck()' function passed as an argument (with the two elements as it's own nested arguments).
 window.setInterval(function() {
     $('#result').text(interceptionCheck($('#imageBall'), $('#objectA')));
-}, 100);
+    if (twoGuards) interceptionCheck($('#imageBall'), $('#objectB'));
+}, 150);
 
 // Function that is called by a short interval (called every interval, in ms), which is checking for the two elements (passed in as arguments) and if they are intercepting. Builds data from the elements that are passed in with the call, to deduce where they are positions in the container.
 function interceptionCheck($el1, $el2) {
@@ -375,7 +444,7 @@ class enemyObject {
         if (this._enemyObjectActive) { // Conditional error handling: Ignores second start button press, if the _enemyObjectActive property is truthy (indicating App is running).
             return;
         }
-        objectElement.style.display = 'block';
+        this.$object.style.display = 'block';
         // Set the right starting CSS attributes of our object.
         this.$object.willChange = 'transform'; // Precaution the browser/UA (userAgent) of the expected change on our object, for optimization.<custom-ident> (an arbitrary value, author defined identifier, not recognized as a pre-defined keyword.
         this.$object.pointerEvents = 'auto';
@@ -391,11 +460,13 @@ class enemyObject {
         if (!this._enemyObjectActive) { // Checks to make sure objects is not running (stopped), if it isn't already running, then returns out (as no action required).
             return;
         }
-        objectElement.style.display = 'none';
+        this.$object.style.display = 'none';
+        this.$object.pointerEvents = 'none';
         this.$object.removeEventListener('transitionend', this.boundEvent); // Removes event listener that would again move the object after it had transitioned. Removed once the transition is completed.
         this._enemyObjectActive = false; // Set state to False, with this setter method. This property value will conditionally determine the behavior of various getters/setters. Indicates whether the targeted object is in motion (so the App is running or not).
     }
 }
 
 // Init the object. Create a new object with initial property value pairs, and passing the target element and the area for the resulting object to interact.
-var objectA = new enemyObject(objectElement, window);
+var objectA = new enemyObject(document.getElementById('objectA'), window);
+var objectB = new enemyObject(document.getElementById('objectB'), window);

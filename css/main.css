@@ -1,25 +1,43 @@
 html, body {
-    background-color: #A4FB4D;
-    font-family: 'Stalinist One'; 
+    font-family: 'Stalinist One' !important;
+}
+
+body {
+    background-image: url("/home/tom/JavaScript/src/Code/Project 1 - Simple Browser Game/resources/bars-background.jpg");
+    background-repeat: repeat;
 }
 
 select {
-    width: 100%;
     height: 5vh;
     border: none;
     border-radius: 20px;
-    background-color: green;
+    background-color: #060870;
+    color: white;
+    padding-left: 1.5%;
+    box-shadow: 0 1.3vh black;
     font-family: 'Stalinist One';
-    font-size: 1.5vh;
-    padding-left: 1%;
+    font-size: 2vh;
+}
+
+select:hover {
+    background-color: #1b03f3;
+}
+
+#speedInputField {
+    width: 100%;
+}
+
+#formationField{
+    width: 20%;
+    margin-left: 25%;
 }
 
 #projPlaceholder {
     margin: 0 auto;
     height: 80vh;
     width: 90vw;
-    background-color: #cff5ab;
-    font-size: 2.2vh;
+    background-color: #7e000a;
+    font-size: 2.4vh;
     cursor: crosshair;
     position: relative;
     z-index: 1;
@@ -34,87 +52,125 @@ select {
 #imageBall {
     position: absolute;
     pointer-events: none;
-    z-index: 2;
+    z-index: 3;
     margin: 0;
     width: 5%;
     height: 5%;
+    display: none;
+    left: 80%;
+    top: 80%;
+}
+
+#stageBackground {
+    position: absolute;
+    margin: auto;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    height: 75%;
+    width: 75%;
 }
 
 img#objectA {
     width: 10%;
     height: 10%;
-    background-color: white;
     position: absolute;
-    z-index: 4;
+    z-index: 5;
     display: none;
     margin: 0;
-    border-radius: 500px;
+    border-radius: 10px;
+    pointer-events: none;
+}
+
+img#objectB {
+    width: 10%;
+    height: 10%;
+    position: absolute;
+    z-index: 5;
+    display: none;
+    margin: 0;
+    border-radius: 10px;
+    pointer-events: none;
 }
 
 .inGameText {
-    z-index: 5;
+    position: absolute;
+    z-index: 6;
     width:25%;
     white-space: nowrap;
+    opacity: 70%;
+}
+
+.outGameText {
+    color: white;
+    font-size: 2.5vh;
 }
 
 /* Dynamic Button Functionality begins here. Adds styling for when the button is interacted with, i.e. When the mouse hovers over it etc. */
 .startButton {
     display: inline-block;
-    font-family: 'Stalinist One';
-    font-size: 2vh;
     padding-bottom: 1vh;
     padding-top: 1vh;
     cursor: pointer;
     text-align: center;
     outline: none;
-    color: #016319;
-    background-color: #03fc3d;
+    color: #c6e0f1;
+    background-color: #060870;
     border: none;
     border-radius: 20px;
-    box-shadow: 0 1vh #01260a;
+    box-shadow: 0 1.3vh black;
     float: right;
     height: 5vh;
     width: 20vw;
+    font-family: 'Stalinist One';
+    font-size: 2.4vh;
 }
 
 /* 'Start' version of the 'startButton' (hovering effects). */
 .startButton:hover {
-    background-color: #3e8e41 !important;
+    background-color: #1b03f3;
 }
 
 /* 'Start' version of the 'startButton'. */
 .startButton:active {
-    background-color: #3e8e41 !important;
-    box-shadow: 0 1vh #666;
+    background-color: #060870;
     transform: translateY(4px);
-}
-
-/* 'Quit' version of the 'startButton' (hovering effects). */
-button:hover[label="quitB"] {
-    background-color: #4D0404 !important;
 }
 
 /* 'Quit' version of the 'startButton'. */
 button[label="quitB"] {
-    background-color: #C61010 !important;
+    background-color: #b10c00;
+}
+
+/* 'Quit' version of the 'startButton' (hovering effects). */
+button:hover[label="quitB"] {
+    background-color: rgb(105, 1, 1);
+}
+
+.startButton:active[label="quitB"] {
+    background-color: #b10c00;
+    transform: translateY(4px);
 }
 
 /* Dialog Pop-up: Title Bar Properties. */
 span[id="ui-id-1"] {
-    background-color: #80ff80 !important;
-    color: #006600 !important;
-    font-family: 'Stalinist One';
+    background-color: #060870;
+    color: rgb(105, 4, 4);
     text-align: center;
+    font-family: 'Stalinist One';
 }
 
 /* Dialog Pop-up: The Alert Box Parent Element - Outer Border (and the whole of the dialog box behind the text box/title bar) Properties. */
 div[id="dialog"] {
-    background-color: #80ff80 !important;
-    color: #006600 !important;
-    font-family: 'Stalinist One';
+    background-color: #060870 !important;
+    color: rgb(105, 4, 4);
     text-align: center;
     display: none;
-    font-size: 50px;
+    font-size: 60px;
+    font-family: 'Stalinist One';
 }
 
 /* Targets all img tags that have an id at least inclusive of the string 'imagePlayer'. */
@@ -123,6 +179,9 @@ img[id*="imagePlayer"] {
     margin: 0;
     height:8%;
     width: 8%;
-    z-index: 3;
+    z-index: 4;
     display: none;
+    border: 3px dotted #1b03f3;
+    border-radius: 50%;
+    background-color: #bd0d007e;
 }

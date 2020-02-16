@@ -6,7 +6,7 @@ Notes/To-Do:-
 
 Use an array in the Hex/RGB Generation Function/Block?
 
-Update/Check/Rewrite all comments; Sort out getter/setter terminology, and property/attribute terminology (position:absolute; / property:attribute;), in the comments. Plus read all comments.
+Update/Check/Rewrite all comments; Sort out getter/setter terminology, and property/attribute terminology (position:absolute; / property:attribute;), in the comments. Plus read all comments. A SEVERE RE-WRITE OF COMMETNS IS NEEDED.
 
 Replace document.getElementById('') & document.getElementsByClassName('') with $('#') & $('.')[n]:
 	/*
@@ -16,15 +16,15 @@ Replace document.getElementById('') & document.getElementsByClassName('') with $
 	alert(document.getElementById('abc123').innerHTML);
 	*/
 
-Maybe add a basketball variation to the game: pick-up the ball and drop: $('#imageBall').draggable();
+Maybe add a variation to the game: pick-up the diamond and drop: $('#imageBall').draggable();
+
+Change to breakout/thieving game, where players are now mines/lasers/pressure plates (and theif/character is the mouse), and ball becomes diamond/jewel being stolen.
 
 Make use of cnavas html5 tag?
 
-Add a drop down to set a choice of formations. Pass value of dropdown into function for conditions to set css props. Make default positions that they're in now one formation, then add another (label them e.g. 4-3-2-2). The options dropdown is on when start is pressed the formation that will be used (with no empty option)
+certain distance amount (a goal amount) adds new random set of lives to exisitng (each time distance goal changes).
 
-90 Seconds of time adds new random set of lives to exisitng (& speed up passing of time).
-
-Using interception check function: check for players/enemies and ref colliding to then have pop up/flash side text/match log div that generates match-like text, e.g. ref talking to a player for warning. [interactive text]
+Using interception check function: check for players/enemies and guards colliding to then have pop up/flash side text/action log div that generates story like text, e.g. guard a point A etc. [interactive text]
 -->
 
 <html>
@@ -33,8 +33,8 @@ Using interception check function: check for players/enemies and ref colliding t
 		<!-- Set a responsively scaled viewport for the user's window size, and assigns some Metadata. Also sets favicon. -->
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="icon" href="C:\Users\berey001t\Documents\Code\My Code (NEW)\Project 1\resources\favicon.png">
-		<title>Project 1: The Football Game</title>
+		<link rel="icon" href="favicon.png">
+		<title>The Heist Game</title>
 		<meta name="author" content="Tom B">
 		<meta name="description" content="Project 1, HTML, CSS, JavaScript, jQuery">
 		
@@ -52,16 +52,13 @@ Using interception check function: check for players/enemies and ref colliding t
 	<body>
 		
 		<!-- The message/alert box pop-up. -->
-		<div name="titleBarTop"><p>Current Date & Time: <b><span id="dateTime"></span><em style="float:right"><u>The Football Game</u></em></b></p></div>
+		<div style="color:white;" name="titleBarTop"><p>Current Date & Time: <b><span id="dateTime"></span><em style="float:right"><u>The Heist Game</u></em></b></p></div>
 		
 		<!-- Message Description Here -->
 		<div id="dialog" title="New Game" name="startingDialogPopUp"><p>GO!</p></div>
 		
 		<!-- The following id block is the container work space, with all nested constituent elements contained within. -->
 		<div id="projPlaceholder">
-			
-			<!-- Message Description Here  <div id='objectA'></div>  -->
-			<img id="objectA" src="resources/referee.png" alt="Ref">
 			
 			<!-- Game heads up display text. -->
 			<nav class="inGameText">
@@ -72,43 +69,58 @@ Using interception check function: check for players/enemies and ref colliding t
 			</nav>
 			
 			<!-- Constituent parts to the game, inserted into the DOM structure. -->
-			<img id="imageBall" src="resources/football-icon-65993.png" alt="O">
-			
+			<img id="objectA" src="resources/police.png" alt="CopA">
+			<img id="objectB" src="resources/stakeout.png" alt="CopB">
+			<img id="stageBackground" src="resources/heist_background_light.jpg" alt="">
 			<nav class="squad">
-				<img id="imagePlayer0" class="enemy" src="resources/playerCircleIcon.png" alt="E0" style="right: 45%; top: 10%;">
-				<img id="imagePlayer1" class="enemy" src="resources/playerCircleIcon.png" alt="E1" style="right: 45%; top: 27%;">
-				<img id="imagePlayer2" class="enemy" src="resources/playerCircleIcon.png" alt="E2" style="right: 24%; top: 30%;">
-				<img id="imagePlayer3" class="enemy" src="resources/playerCircleIcon.png" alt="E3" style="right: 6%; top: 35%;">
-				<img id="imagePlayer4" class="enemy" src="resources/playerCircleIcon.png" alt="E4" style="left: 24%; top: 30%;">
-				<img id="imagePlayer5" class="enemy" src="resources/playerCircleIcon.png" alt="E5" style="left: 6%; top: 35%;">
-				<img id="imagePlayer6" class="enemy" src="resources/playerCircleIcon.png" alt="E6" style="right: 35%; top: 48%;">
-				<img id="imagePlayer7" class="enemy" src="resources/playerCircleIcon.png" alt="E7" style="left: 35%; top: 48%;">
-				<img id="imagePlayer8" class="enemy" src="resources/playerCircleIcon.png" alt="E8" style="right: 17%; top: 65%;">
-				<img id="imagePlayer9" class="enemy" src="resources/playerCircleIcon.png" alt="E9" style="left: 17%; top: 65%;">
-				<img id="imagePlayer10" class="enemy" src="resources/playerCircleIcon.png" alt="E10" style="right: 45%; top: 80%;">
+				<img id="imagePlayer0" class="enemy" src="resources/handcuff.png" alt="E0"> <!-- style="right: 45%; top: 10%;" -->
+				<img id="imagePlayer1" class="enemy" src="resources/handcuff.png" alt="E1"> <!-- style="right: 45%; top: 27%;" -->
+				<img id="imagePlayer2" class="enemy" src="resources/handcuff.png" alt="E2"> <!-- style="right: 24%; top: 30%;"-->
+				<img id="imagePlayer3" class="enemy" src="resources/handcuff.png" alt="E3"> <!-- style="right: 6%; top: 35%;"-->
+				<img id="imagePlayer4" class="enemy" src="resources/handcuff.png" alt="E4"> <!-- style="left: 24%; top: 30%;"-->
+				<img id="imagePlayer5" class="enemy" src="resources/handcuff.png" alt="E5"> <!-- style="left: 6%; top: 35%;"-->
+				<img id="imagePlayer6" class="enemy" src="resources/handcuff.png" alt="E6"> <!-- style="right: 35%; top: 48%;"-->
+				<img id="imagePlayer7" class="enemy" src="resources/handcuff.png" alt="E7"> <!-- style="left: 35%; top: 48%;"-->
+				<img id="imagePlayer8" class="enemy" src="resources/handcuff.png" alt="E8"> <!-- style="right: 17%; top: 65%;"-->
+				<img id="imagePlayer9" class="enemy" src="resources/handcuff.png" alt="E9"> <!-- style="left: 17%; top: 65%;"-->
+				<img id="imagePlayer10" class="enemy" src="resources/handcuff.png" alt="E10"> <!-- style="right: 45%; top: 80%;"-->
 			</nav>
+			<img id="imageBall" src="resources/diamond.png" alt="O">
 		</div>
 		
 		<!-- High score and the Start/Quit button placement. -->
-		<div>
-			<p><b id="highScore"></b>
-			<button class="startButton" name="startQuitButton">Start!</button></p>
+		<div class="outGameText">
+			<p>
+				<b id="highScore"></b>
+				<select id="formationField" name="formationDropDown">
+					<option selected="selected" value="541">5-4-1</option>
+					<option value="343">3-4-3</option>
+					<option value="random">Randomise (Test/Alpha)</option>
+				</select>
+				<select id="guardsField" name="formationDropDown">
+					<option selected="selected" value=0>1x Guard</option>
+					<option value=1>2x Guards</option>
+				</select>
+				<button class="startButton" name="startQuitButton">Start!</button>
+			</p>
 			
-			<p>Colliding? <span id="result">false</span></p>
+			
 			
 			<!-- Enemy object movement toolbar. -->
 			<select id="speedInputField" name="difficultyDropDown">
 				<option selected="selected" value=100>Very Easy</option>
-				<option value=200>Easy</option>
-				<option value=500>Medium</option>
-				<option value=750>Hard</option>
-				<option value=1000>Very Hard</option>
+				<option value="200">Easy</option>
+				<option value="500">Medium</option>
+				<option value="750">Hard</option>
+				<option value="1000">Very Hard</option>
 			</select>
 		</div>
-		
+		<p>Colliding? <span id="result">false</span></p>
 		<!-- Load the jQuery & jQueryUI Libraries (Google CDNs). -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 		<script src="scripts/main.js"></script> <!-- Call main.js, my script. -->
+
+		<sup style="color:white;"><div>All icons images made by the following artists:<br> <a href="https://www.flaticon.com/authors/roundicons" title="Roundicons">Roundicons</a>  </a></div><div><a href="https://www.flaticon.com/authors/flat-icons" title="Flat Icons">Flat Icons</a> </a></div><div><a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> </a></div><div><a href="https:www.flaticon.com/authors/srip" title="srip">srip</a><br>from <a href="https://www.flaticon.com" title="Flaticon">www.flaticon.com</a></div><p><a href="https://wallpapersafari.com/jail-backgrounds/">Jail Backgrounds</a></p></sup>
 	</body>
 </html>
