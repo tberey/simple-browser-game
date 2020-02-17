@@ -3,7 +3,7 @@ html, body {
 }
 
 body {
-    background-image: url("/home/tom/JavaScript/src/Code/Project 1 - Simple Browser Game/resources/bars-background.jpg");
+    background-image: url("bars-background.jpg");
     background-repeat: repeat;
 }
 
@@ -29,7 +29,7 @@ select:hover {
 
 #formationField{
     width: 20%;
-    margin-left: 25%;
+    margin-left: 7%;
 }
 
 #projPlaceholder {
@@ -61,6 +61,20 @@ select:hover {
     top: 80%;
 }
 
+#powerUp {
+    pointer-events: none;
+    position: absolute;
+    margin: 0;
+    height:7%;
+    width: 7%;
+    z-index: 4;
+    display: none;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    background-color: #07e95e44;
+}
+
 #stageBackground {
     position: absolute;
     margin: auto;
@@ -81,7 +95,7 @@ img#objectA {
     z-index: 5;
     display: none;
     margin: 0;
-    border-radius: 10px;
+    border-radius: 50%;
     pointer-events: none;
 }
 
@@ -92,7 +106,7 @@ img#objectB {
     z-index: 5;
     display: none;
     margin: 0;
-    border-radius: 10px;
+    border-radius: 50%;
     pointer-events: none;
 }
 
@@ -101,7 +115,7 @@ img#objectB {
     z-index: 6;
     width:25%;
     white-space: nowrap;
-    opacity: 70%;
+    opacity: 72%;
 }
 
 .outGameText {
@@ -127,6 +141,8 @@ img#objectB {
     width: 20vw;
     font-family: 'Stalinist One';
     font-size: 2.4vh;
+    margin-top: 4px;
+    margin-bottom: 4px;
 }
 
 /* 'Start' version of the 'startButton' (hovering effects). */
@@ -184,4 +200,8 @@ img[id*="imagePlayer"] {
     border: 3px dotted #1b03f3;
     border-radius: 50%;
     background-color: #bd0d007e;
+}
+
+img:hover[id*="imagePlayer"] {
+    background-color: #ff0000;
 }

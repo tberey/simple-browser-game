@@ -6,7 +6,7 @@ Notes/To-Do:-
 
 Use an array in the Hex/RGB Generation Function/Block?
 
-Update/Check/Rewrite all comments; Sort out getter/setter terminology, and property/attribute terminology (position:absolute; / property:attribute;), in the comments. Plus read all comments. A SEVERE RE-WRITE OF COMMETNS IS NEEDED.
+Update/Check/Rewrite all comments; Sort out getter/setter terminology, and property/attribute terminology (position:absolute; / property:attribute;), in the comments. Plus read all comments. A SEVERE RE-WRITE OF COMMETNS IS NEEDED!!!
 
 Replace document.getElementById('') & document.getElementsByClassName('') with $('#') & $('.')[n]:
 	/*
@@ -14,17 +14,25 @@ Replace document.getElementById('') & document.getElementsByClassName('') with $
 	var testing = $('#abc123')[0];
 	testing.innerHTML = 'Boo!';
 	alert(document.getElementById('abc123').innerHTML);
-	*/
+	*/.
 
 Maybe add a variation to the game: pick-up the diamond and drop: $('#imageBall').draggable();
 
-Change to breakout/thieving game, where players are now mines/lasers/pressure plates (and theif/character is the mouse), and ball becomes diamond/jewel being stolen.
+Make use of canvas html5 tag?
 
-Make use of cnavas html5 tag?
+Certain distance amount (a goal amount) adds new random set of lives to exisitng (each time distance goal changes).
 
-certain distance amount (a goal amount) adds new random set of lives to exisitng (each time distance goal changes).
+Using interception check function: check for alarms/enemies and guards colliding to then have pop up/flash side text/action log div that generates story like text, e.g. guard a point A etc. [interactive text].
 
-Using interception check function: check for players/enemies and guards colliding to then have pop up/flash side text/action log div that generates story like text, e.g. guard a point A etc. [interactive text]
+Add an overtop hue? So add a new html div, wrapped around the whole DOM body, with a non-fully opaque color applied (opacity 70%?) to the background color of it.
+
+Pass through some variables at parameters, so there's not as many Global Variables.
+
+Sort out all CSS (classes/ID's use, and any unecessarily repeated properties).
+
+On quit/start button: Set better diamond starting location. (Supposedly already done, or set fundation for it?!).
+
+Container height/width methods are repeated - change this (in js file).
 -->
 
 <html>
@@ -52,7 +60,7 @@ Using interception check function: check for players/enemies and guards collidin
 	<body>
 		
 		<!-- The message/alert box pop-up. -->
-		<div style="color:white;" name="titleBarTop"><p>Current Date & Time: <b><span id="dateTime"></span><em style="float:right"><u>The Heist Game</u></em></b></p></div>
+		<div style="color:white;" name="titleBarTop"><p>Current Date & Time: <b><span id="dateTime"></span><em style="float:right;"><u>The Heist Game</u></em></b></p></div>
 		
 		<!-- Message Description Here -->
 		<div id="dialog" title="New Game" name="startingDialogPopUp"><p>GO!</p></div>
@@ -64,7 +72,7 @@ Using interception check function: check for players/enemies and guards collidin
 			<nav class="inGameText">
 				<p id="lives"></p>
 				<p id="distance"></p>
-				<p id="rounds"></p>
+				<p id="score"></p>
 				<p id="timer"></p>
 			</nav>
 			
@@ -72,6 +80,9 @@ Using interception check function: check for players/enemies and guards collidin
 			<img id="objectA" src="resources/police.png" alt="CopA">
 			<img id="objectB" src="resources/stakeout.png" alt="CopB">
 			<img id="stageBackground" src="resources/heist_background_light.jpg" alt="">
+			<img id="powerUp" src="resources/transfer.png" alt="UP">
+			<img id="imageBall" src="resources/diamond.png" alt="O">
+
 			<nav class="squad">
 				<img id="imagePlayer0" class="enemy" src="resources/handcuff.png" alt="E0"> <!-- style="right: 45%; top: 10%;" -->
 				<img id="imagePlayer1" class="enemy" src="resources/handcuff.png" alt="E1"> <!-- style="right: 45%; top: 27%;" -->
@@ -85,7 +96,6 @@ Using interception check function: check for players/enemies and guards collidin
 				<img id="imagePlayer9" class="enemy" src="resources/handcuff.png" alt="E9"> <!-- style="left: 17%; top: 65%;"-->
 				<img id="imagePlayer10" class="enemy" src="resources/handcuff.png" alt="E10"> <!-- style="right: 45%; top: 80%;"-->
 			</nav>
-			<img id="imageBall" src="resources/diamond.png" alt="O">
 		</div>
 		
 		<!-- High score and the Start/Quit button placement. -->
