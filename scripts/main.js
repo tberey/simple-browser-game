@@ -1,6 +1,5 @@
 // Global Variables created & assigned, with any constants initialised at page load. Full global scope required for these variables. Object also initialised.
-var gameOverText;
-var inGameTime;
+var gameTimeInterval;
 var collisionInterval;
 var powerUpInterval;
 var _distance;
@@ -19,6 +18,7 @@ var scoreVar = document.getElementById('score');
 var gameTimeS = document.getElementById('timer');
 var highScoreField = document.getElementById('highScore');
 var squadSelected = document.getElementsByClassName('squad')[0].getElementsByTagName('img');
+var powerUp = document.getElementById('powerUp');
 
 
 // Calls the 'initialise' function through these event listeners, which are set to wait for the page's DOM to be fully loaded and ready.
@@ -28,8 +28,8 @@ else window.onload = initialise;
 
 
 function initialise() {
-    console.log('DOM/Page Ready');
-    livesVar.innerHTML = `Lives: ${(_numberOfLives=0)}`; // Leave outside 'initialised' for score/game over display - only needs init once on page load.
+    //console.log('DOM/Page Ready');
+    livesVar.innerHTML = `Resistance: ${(_numberOfLives=0)}`;
     enemyFormation(); // Init formation on page load.
     initialised();
 
@@ -41,27 +41,6 @@ function initialise() {
         }
     });
 
-    // Small intervaled function that gets browser's local date & time, and updated every second (and dynamically displayed in page, through concatenation).
-    setInterval(() => {
-        let dDate = new Date(); // Local variable referencing the Date object.
-        document.getElementById('dateTime').innerHTML = ('0' + dDate.getDate()).slice(-2) + '-' + ('0' + (dDate.getMonth()+1)).slice(-2) + '-' + dDate.getFullYear() + '; ' + ('0' + dDate.getHours()).slice(-2) + ':' + ('0' + dDate.getMinutes()).slice(-2) + ':' + ('0' + dDate.getSeconds()).slice(-2);
-    }, 1000);
-    return;
-}
-
-
-// This function is called when the page is ready, and contains the event listeners which will listen for, and control, some of the game's actions. Moreover the generated Hex code is applied to the background color here, after it has generated a random hex value by calling the 'hexColour' function. Furthermore, this function updates the displayed values with any initialised variables. Finally, it also contains start/quit game button controls.
-function initialised() {
-    // Initialise variables/display.
-    _numberOfLives = 0;
-    distanceVar.innerHTML = `Distance: ${(_distance=0)}`;
-    scoreVar.innerHTML = `Score: ${(_scoreNo=0)}`;
-    gameTimeS.innerHTML = `${_totalSeconds=0} secs`;
-    highScoreField.innerHTML = `High Score: ${(_highScore = _highScore || 0)}`;
-    projPlaceholderVar.style.background = '#7e000a';
-    projPlaceholderVar.style.color = 'black';
-    livesVar.style.color = 'black';
-    
     // Event listener for input box, to updates object's speed for the next motion.
     document.getElementById('speedInputField').addEventListener('change', function() {
         objectA._setSpeed(parseInt(this.value)); // Parses inputted value as an integer (to output an integer value), and runs '_setSpeed' setter method to set value.
@@ -76,8 +55,29 @@ function initialised() {
     document.getElementById('guardsField').addEventListener('change', function() {
         twoGuards = parseInt(this.value);
     });
-    console.log('Initialised');
-    return;
+
+    // Small intervaled function that gets browser's local date & time, and updated every second (and dynamically displayed in page, through concatenation).
+    setInterval(() => {
+        let dDate = new Date(); // Local variable referencing the Date object.
+        document.getElementById('dateTime').innerHTML = ('0' + dDate.getDate()).slice(-2) + '-' + ('0' + (dDate.getMonth()+1)).slice(-2) + '-' + dDate.getFullYear() + '; ' + ('0' + dDate.getHours()).slice(-2) + ':' + ('0' + dDate.getMinutes()).slice(-2) + ':' + ('0' + dDate.getSeconds()).slice(-2);
+    }, 1000);
+}
+
+
+// This function is called when the page is ready, and contains the event listeners which will listen for, and control, some of the game's actions. Moreover the generated Hex code is applied to the background color here, after it has generated a random hex value by calling the 'hexColour' function. Furthermore, this function updates the displayed values with any initialised variables. Finally, it also contains start/quit game button controls.
+function initialised() {
+    // Initialise variables/display.
+    distanceVar.innerHTML = `Distance: ${(_distance=0)}`;
+    scoreVar.innerHTML = `Score: ${(_scoreNo=0)}`;
+    gameTimeS.innerHTML = `${_totalSeconds=0} secs`;
+    highScoreField.innerHTML = `High Score: ${(_highScore = _highScore || 0)}`;
+    document.getElementById('imageBall').style.left = '90%';
+    document.getElementById('imageBall').style.top = '90%';
+    document.getElementById('imageBall').style.display = 'none';
+    powerUp.style.display = 'none';
+    projPlaceholderVar.style.background = '#7e000a';
+    projPlaceholderVar.style.color = 'black';
+    //console.log('Initialised');
 }
 
 
@@ -85,34 +85,31 @@ function startGame() {
     // Sets the Start Button to the Quit Button.
     startButtonVar.innerHTML = 'Quit';
     startButtonVar.setAttribute('label', 'quitB');
-    livesVar.innerHTML = `Lives: ${(_numberOfLives=4)}`;
-    livesVar.style.color = projPlaceholderVar.style.color; // Re-matches display text colors (lives & rest of text).
-    document.getElementById('imageBall').style.display = 'block';
+    livesVar.innerHTML = `Resistance: ${(_numberOfLives=100)}`;
     gameInSession = true;
-    
+
+    timersProcessing(1);
     objectA.start();
     if (twoGuards) objectB.start();
-    timersProcessing(true);
     
     projPlaceholderVar.addEventListener('mousemove', mouseTracking); // Calls 'mouseTracking' function, whenever the mouse is moved inside the div.
     for (let i=0; i < squadSelected.length; i++) { // Builds event listeners for each enemy image in the DOM structure.
         squadSelected[i].addEventListener('mouseover', roundOfGame);
         squadSelected[i].style.display = 'block';
     }
-    return;
 }
 
 
-function quitGame() {
+function quitGame(bool) {
     // Sets the Quit Button back to the Start Button.
     startButtonVar.innerHTML = 'Start!';
     startButtonVar.setAttribute('label', 'startB');
-    document.getElementById('imageBall').style.display = 'none';
+    if (!bool) livesVar.innerHTML = `Resistance: ${(_numberOfLives=0)}`;
     gameInSession = false;
 
+    timersProcessing(0);
     objectA.stop();
     objectB.stop();
-    timersProcessing(false);
     initialised();
     
     projPlaceholderVar.removeEventListener('mousemove', mouseTracking); // Removes event listener for when the mouse is moved inside the div.
@@ -120,60 +117,27 @@ function quitGame() {
         squadSelected[i].removeEventListener('mouseover',roundOfGame);
         squadSelected[i].style.display = 'none';
     }
-    return;
 }
 
 
-function enemyFormation(formationVal='541') { // Set css style properties, conditional based on formation selected from dropdown on page. With testing randomise
+function enemyFormation(formationVal='541') { // Set css style properties, conditional based on formation selected from dropdown on page. With testing randomise option.
     switch(formationVal) {
         case '541':
-            document.getElementById('imagePlayer0').style.right = '45%';
-            document.getElementById('imagePlayer0').style.top = '10%';
-            document.getElementById('imagePlayer1').style.right = '45%';
-            document.getElementById('imagePlayer1').style.top = '27%';
-            document.getElementById('imagePlayer2').style.right = '24%';
-            document.getElementById('imagePlayer2').style.top = '30%';
-            document.getElementById('imagePlayer3').style.right = '6%';
-            document.getElementById('imagePlayer3').style.top = '35%';
-            document.getElementById('imagePlayer4').style.right = '67%';
-            document.getElementById('imagePlayer4').style.top = '30%';
-            document.getElementById('imagePlayer5').style.right = '86%';
-            document.getElementById('imagePlayer5').style.top = '35%';
-            document.getElementById('imagePlayer6').style.right = '35%';
-            document.getElementById('imagePlayer6').style.top = '48%';
-            document.getElementById('imagePlayer7').style.right = '55%';
-            document.getElementById('imagePlayer7').style.top = '48%';
-            document.getElementById('imagePlayer8').style.right = '17%';
-            document.getElementById('imagePlayer8').style.top = '65%';
-            document.getElementById('imagePlayer9').style.right = '73%';
-            document.getElementById('imagePlayer9').style.top = '65%';
-            document.getElementById('imagePlayer10').style.right = '45%';
-            document.getElementById('imagePlayer10').style.top = '80%';
+            var rightArray = [45,45,24,6,67,86,35,55,17,73,45];
+            var topArray = [10,27,30,35,30,35,48,48,65,65,80];
+            for (let i=0; i < $('.enemy').length; i++) {
+                document.getElementById(`imagePlayer${[i]}`).style.right = `${rightArray[i]}%`;
+                document.getElementById(`imagePlayer${[i]}`).style.top = `${topArray[i]}%`;
+            }
             break;
         
         case '343':
-            document.getElementById('imagePlayer0').style.right = '45%';
-            document.getElementById('imagePlayer0').style.top = '10%';
-            document.getElementById('imagePlayer1').style.right = '45%';
-            document.getElementById('imagePlayer1').style.top = '30%';
-            document.getElementById('imagePlayer2').style.right = '20%';
-            document.getElementById('imagePlayer2').style.top = '30%';
-            document.getElementById('imagePlayer3').style.right = '70%';
-            document.getElementById('imagePlayer3').style.top = '30%';
-            document.getElementById('imagePlayer4').style.right = '78%';
-            document.getElementById('imagePlayer4').style.top = '55%';
-            document.getElementById('imagePlayer5').style.right = '12%';
-            document.getElementById('imagePlayer5').style.top = '55%';
-            document.getElementById('imagePlayer6').style.right = '35%';
-            document.getElementById('imagePlayer6').style.top = '55%';
-            document.getElementById('imagePlayer7').style.right = '55%';
-            document.getElementById('imagePlayer7').style.top = '55%';
-            document.getElementById('imagePlayer8').style.right = '17%';
-            document.getElementById('imagePlayer8').style.top = '80%';
-            document.getElementById('imagePlayer9').style.right = '73%';
-            document.getElementById('imagePlayer9').style.top = '80%';
-            document.getElementById('imagePlayer10').style.right = '45%';
-            document.getElementById('imagePlayer10').style.top = '80%';
+            var rightArray = [45,45,20,70,78,12,35,55,17,73,45];
+            var topArray = [10,30,30,30,55,55,55,55,80,80,80];
+            for (let i=0; i < $('.enemy').length; i++) {
+                document.getElementById(`imagePlayer${[i]}`).style.right = `${rightArray[i]}%`;
+                document.getElementById(`imagePlayer${[i]}`).style.top = `${topArray[i]}%`;
+            }
             break;
         
         case 'random':
@@ -199,125 +163,98 @@ function enemyFormation(formationVal='541') { // Set css style properties, condi
             }
             break;
     }
-    return;
 }
 
 
-const hexColour = (val) => { // Assigns a randomly generated hex string to a constant.
-    let _generatedHex = '';
+let hexColor = (bool) => { // Assigns a randomly generated hex string to a constant.
+    let _generatedHex='';
     
     for (let i=0; i < 6; i++) { // Loop through 6 times to get all the 6 required digits, excluding '#'.
         let chr = Math.floor(Math.random() * 16); // Generated random number between 0 and 15.
         
-        if (chr < 10 && chr != 'NaN') { // Assigns a numerical value if 'chr' < 10 & concatenates with each pass.
+        if (chr < 10 && chr !== 'NaN') { // Assigns a numerical value if 'chr' < 10 & concatenates with each pass.
             _generatedHex = _generatedHex + '' + chr;
-        } else if (chr >= 10 && chr != 'NaN') { // Assign a hex alphabetical character (A-F), if 10<=chr<16, using the switch conditional statement. Concatenates with each pass.
+        } else if (chr >= 10 && chr !== 'NaN') { // Assign a hex alphabetical character (A-F), if 10<=chr<16, using the switch conditional statement. Concatenates with each pass.
             switch (chr) {
                 case 10:
                     chr = 'A';
-                    _generatedHex = _generatedHex + '' + chr;
                     break;
                 case 11:
                     chr = 'B';
-                    _generatedHex = _generatedHex + '' + chr;
                     break;
                 case 12:
                     chr = 'C';
-                    _generatedHex = _generatedHex + '' + chr;
                     break;
                 case 13:
                     chr = 'D';
-                    _generatedHex = _generatedHex + '' + chr;
                     break;
                 case 14:
                     chr = 'E';
-                    _generatedHex = _generatedHex + '' + chr;
-                    break;
-                case 15:
-                    chr = 'F';
-                    _generatedHex = _generatedHex + '' + chr;
                     break;
                 default:
-                    return 'error';
+                    chr = 'F';
             }
-        } else {
-            return 'error';
-        }
-        
-        // Checks whether the hex code is of the correct length, to then convert the hex string into an RGB format, in order to check the color isn't too dark for the informational text displayed. If it too dark, (i.e. black text on dark background), it will change the text font color accordingly.
-        if (_generatedHex.length == 6 && val === 0) {
-            convertHexToRGB(_generatedHex);
-            
-            // Dissect the three bytes that describe red, green & blue in the hex string. These bytes are then each passed into the 'parseInt' method, to be parsed as an integer, and then stored as a variable. In short; turn convert the generated hex value to and RGB value (not for use however).
-            function convertHexToRGB(hexCode) {
-                hexCode = hexCode.replace('#','');
-                let rr = parseInt(hexCode.substring(0,2), 16);
-                let gg = parseInt(hexCode.substring(2,4), 16);
-                let bb = parseInt(hexCode.substring(4,6), 16);
-                let result = rr + gg + bb;
-                if (result < 204 || (rr < 96 && gg < 96 && bb < 96)) { // Detect if the background color will be too dark to read black text, and react if so.
-                    projPlaceholderVar.style.color = 'white';
-                    livesVar.style.color = 'white';
-                } else {
-                    projPlaceholderVar.style.color = 'black';
-                    livesVar.style.color = 'black';
-                }
-                return result;
-            }
-            return;
+            _generatedHex += chr;
         }
     }
     _generatedHex = '#' + _generatedHex;
+
+    // Checks whether the hex code is of the correct length, to then convert the hex string into an RGB format, in order to check the color isn't too dark for the informational text displayed. If it too dark, (i.e. black text on dark background), it will change the text font color accordingly.
+    if (_generatedHex.length == 7 && bool) {
+        convertHexToRGB(_generatedHex);
+        
+        // Dissect the three bytes that describe red, green & blue in the hex string. These bytes are then each passed into the 'parseInt' method, to be parsed as an integer, and then stored as a variable. In short; turn convert the generated hex value to and RGB value (not for use however).
+        function convertHexToRGB(hexCode) {
+            hexCode = hexCode.replace('#','');
+            let rr = parseInt(hexCode.substring(0,2), 16); //radix = 16, so convert from hexadecimal.
+            let gg = parseInt(hexCode.substring(2,4), 16);
+            let bb = parseInt(hexCode.substring(4,6), 16);
+            let result = rr + gg + bb;
+            if (result < 204 || (rr < 96 && gg < 96 && bb < 96)) { // Detect if the background color will be too dark to read black text, and react if so.
+                projPlaceholderVar.style.color = 'white';
+                livesVar.style.color = 'white';
+            } else {
+                projPlaceholderVar.style.color = 'black';
+                livesVar.style.color = 'black';
+            }
+        }
+    }
     return _generatedHex; // Returns the newly generated & formatted hex code, with '#' pre-pended.
 };
 
 
 // This function handles each round (after a click in the div), by assessing number of lives. It reports the game's results and reinitialises on game over (lives = 0), or simply continues to count up if (and decrease lives) if not a game over, (i.e. lives < 0).
 function roundOfGame() {
-    projPlaceholderVar.style.background = hexColour(0); // Passes integer 0 as argument to identify background color is the change that has been applied.
-    _numberOfLives--;
+    projPlaceholderVar.style.backgroundColor = hexColor(true); // Passes true as argument to identify background color is the change that has been applied.
+    _numberOfLives-= 2;
 
     if (_numberOfLives < 0) _numberOfLives = 0; // Exception handler to prevent lives falling below 0 (getting hit without having progressed a round).
     
     if (_numberOfLives <= 0) { // Game Over conditions MET: Sets the final statistic results, as well as the celebration color changing text.
-        _scoreNo += Math.floor(parseInt(_distance) / 10) + Math.floor(parseInt(_totalSeconds) / 2);
-        livesVar.innerHTML = `Game Over! Your Score is: ${_scoreNo} <<<>>> Lives: ${_numberOfLives}`;
+        _scoreNo += Math.floor(parseInt(_distance) / 5) + Math.floor(parseInt(_totalSeconds));
+        livesVar.innerHTML = `Game Over! Your Score is: ${_scoreNo} << >> Resistance: ${_numberOfLives}`;
         // Runs an intervaled timer (in ms), which calls the 'hexColour' function, to apply a generated random hex to the specific game over text. Each interval applies a new color, for some graphics. Passes integer '1' as argument, to identify that this generated hex code is for the Game-Over text, (and so the surrounding text doesn't need to change color, as the background color is unchanged). Re-matches all the text color and closes the timer itself, once completed.
         
         if (_scoreNo > _highScore) { // Decide and set the new high score value, if condition met for a value higher than the previous stored value.
             _highScore = _scoreNo;
-            livesVar.innerHTML = `NEW HIGH SCORE: ${_scoreNo} <<<>>> Lives: ${_numberOfLives}`;
+            livesVar.innerHTML = `NEW HIGH SCORE: ${_scoreNo} << >> Resistance: ${_numberOfLives}`;
         }
-
-        let _tmpVar = 0; // Leave outside interval, else infinite loop.
-        gameOverText = setInterval(() => {
-            if (_tmpVar < 20) {
-                livesVar.style.color = hexColour(1);
-                _tmpVar++;
-            } else {
-                clearInterval(gameOverText);
-                livesVar.style.color = projPlaceholderVar.style.color; // Re-matching text colors on interval timer close down.
-            }
-        }, 250);
         
-        quitGame();
-        return;
+        timersProcessing(2)
+        quitGame(true); // Pass through argument true with call, so not to init lives to 0;
         
     } else if (_numberOfLives > 0) { // Game Over conditions NOT MET: Displays final statistic results, and game continues.
         
-        scoreVar.innerHTML = `Score: ${(_scoreNo+=1)}`;
-        livesVar.innerHTML = `Lives: ${_numberOfLives}`;
-        return;
+        scoreVar.innerHTML = `Score: ${(_scoreNo-=3)}`;
+        livesVar.innerHTML = `Resistance: ${_numberOfLives}`;
 
-    } else {
-        return 'error';
     }
 }
 
 
-function timersProcessing(bool) {
-    if (bool) {
-        clearInterval(gameOverText);
+function timersProcessing(val) {
+    
+    if (val==1) {
 
         $(() => {
             startButtonVar.disabled = true;
@@ -328,84 +265,92 @@ function timersProcessing(bool) {
         setTimeout(() => {
             $('#dialog').dialog('close'); // Close the New Game pop-up dialog box (jQuery).
             startButtonVar.disabled = false;
-        }, 1200);
+        }, 1100);
         
-        _totalSeconds = 0; // Init the total seconds accumulated, before beginning any count again.
         // Runs the intervaled timer, that simply adds 1 to a zeroed integer variable every interval (specified in ms). This counted up time is displayed in total seconds (not formatted, for now).
-        inGameTime = setInterval(() => {
-            gameTimeS.innerHTML = `${(_totalSeconds++)} secs`;
+        gameTimeInterval = setInterval(() => {
+            gameTimeS.innerHTML = `${(_totalSeconds+=1)} secs`;
         }, 1000);
-
+        
         // Checks for collisions in the two query selected elements that are passed into the 'interceptionCheck' function, as arguments, via a short intervaled timer. This happens from calling the text() method with the nested 'interceptionCheck()' function passed as an argument (with the two elements as it's own nested arguments).
         collisionInterval = setInterval(() => {
-            $('#result').text(interceptionCheck($('#imageBall'), $('#objectA')));
+            if (gameInSession) for (let i=0; i < $('.enemy').length; i++) {interceptionCheck($('#imageBall'), $(`#imagePlayer${[i]}`))};
+            if (gameInSession) interceptionCheck($('#imageBall'), $('#objectA'));
             if (twoGuards) interceptionCheck($('#imageBall'), $('#objectB'));
             if (!prop) interceptionCheck($('#imageBall'), $('#powerUp'), true);
-        }, 150);
-        
-        var prop = true;
-        powerUpInterval = setInterval((powerUp = document.getElementById('powerUp')) => {
+        }, 100);
+
+        let prop = true;
+        powerUpInterval = setInterval(() => {
             prop = !(prop);
-            powerUp.style.display = 'none';
             powerUp.style.top = `${Math.floor(Math.random() * $('#projPlaceholder').height()/$('#projPlaceholder').height()*100)}%`;
             powerUp.style.left = `${Math.floor(Math.random() * $('#projPlaceholder').width()/$('#projPlaceholder').width()*100)}%`;
             (prop) ? powerUp.style.display = 'none' : powerUp.style.display = 'block';
-        }, 6000)
+        }, 7000);
+        
+    } else if (val==0) {
 
-
-    } else if (!bool) {
-        powerUp.style.display = 'none';
         clearInterval(collisionInterval);
         clearInterval(powerUpInterval);
-        clearInterval(inGameTime);
+        clearInterval(gameTimeInterval);
+
+    } else if (val==2) {
+
+        let gameOverInterval = setInterval(() => {
+            livesVar.style.color = hexColor(false);
+        }, 400);
+
+        setTimeout(() => {
+            clearInterval(gameOverInterval);
+            livesVar.style.color = 'black';
+        },7000);
+        
     }
-    return;
 }
 
 
 // This function is called upon any mouse movement in the target div, as a result of the event listener. Triggers the targeted image element to move towards the mouse, and counts up a 'number of moves' based on mouse movement distance. Passes the Event object as an argument for the parameter applied passed into the function.
 function mouseTracking(e) { // Passes 'e' event object into the function when called, as a parameter. The argument for this 'e' parameter is by default the event that calls the function, so in this case e is the mousemove event data (like layerX/Y properties for example).
-    if (gameInSession) {
-        let _xCoord = e.layerX; // Get and store x-coord & y-coord of mouse pointer in the browser window.
-        let _yCoord =  e.layerY;
-        distanceVar.innerHTML = `Distance: ${Math.floor((_distance++)/19)}`;
-        $('#imageBall').stop().animate({left:_xCoord-20, top:_yCoord-20}); // jQuery used to create the positional vector for the element to be animated (moved) to, which in this case is the cursor position inside the div. Decrease x and y values by 20 to centrally align image with the mouse pointer.
-    }
-    return;
+    let _xCoord = e.layerX; // Get and store x-coord & y-coord of mouse pointer in the browser window.
+    let _yCoord =  e.layerY;
+    distanceVar.innerHTML = `Distance: ${Math.floor((_distance+=1)/16)}`;
+    $('#imageBall').stop().animate({left:_xCoord-20, top:_yCoord-20}); // jQuery used to create the positional vector for the element to be animated (moved) to, which in this case is the cursor position inside the div. Decrease x and y values by 20 to centrally align image with the mouse pointer.
 }
 
 
 // Function that is called by a short interval (called every interval, in ms), which is checking for the two elements (passed in as arguments) and if they are intercepting. Builds data from the elements that are passed in with the call, to deduce where they are positions in the container.
-function interceptionCheck($el1, $el2, bool) {
-    if (gameInSession) {
-        // Element 1 data (The ball image).
-        let el1Offset = $el1.offset();
-        let el1Height = $el1.outerHeight(true);
-        let el1Width = $el1.outerWidth(true);
-        let el1DistanceTop  = el1Offset.top + el1Height;
-        let el1DistanceLeft = el1Offset.left + el1Width;
+function interceptionCheck(el1, el2, bool) {
+    // Element 1 data (The ball image).
+    let el1Offset = el1.offset();
+    let el1Height = el1.outerHeight(true);
+    let el1Width = el1.outerWidth(true);
+    let el1DistanceTop  = el1Offset.top + el1Height;
+    let el1DistanceLeft = el1Offset.left + el1Width;
 
-        // Element 2 data (The enemy image).
-        let el2Offset = $el2.offset();
-        let el2Height = $el2.outerHeight(true);
-        let el2Width = $el2.outerWidth(true);
-        let el2DistanceTop = el2Offset.top + el2Height;
-        let el2DistanceLeft = el2Offset.left + el2Width;
+    // Element 2 data (The enemy image).
+    let el2Offset = el2.offset();
+    let el2Height = el2.outerHeight(true);
+    let el2Width = el2.outerWidth(true);
+    let el2DistanceTop = el2Offset.top + el2Height;
+    let el2DistanceLeft = el2Offset.left + el2Width;
 
-        let interceptionStatus = (el1DistanceTop < el2Offset.top || el1Offset.top > el2DistanceTop || el1DistanceLeft < el2Offset.left || el1Offset.left > el2DistanceLeft); // Returns boolean value, if an interception is detected through the comparison and or (||) operators.
-        
-        // If !interceptionStatus is truthy (i.e. interceptionStatus is falsey), acknowledges the player has been hit, and calls 'roundOfGame' function.
-        if (!interceptionStatus && !bool) {
-            roundOfGame();
-        } else if (!interceptionStatus && bool && powerUp.style.display == 'block') { // Third condition is the invisible pickUp still wouldn't give 2 lives.
-            livesVar.innerHTML =`Lives: ${(_numberOfLives+=2)}`;
-            powerUp.style.display = 'none';
-            powerUp.style.top = `${Math.floor(Math.random() * $('#projPlaceholder').height()/$('#projPlaceholder').height()*100)}%`;
-            powerUp.style.left = `${Math.floor(Math.random() * $('#projPlaceholder').width()/$('#projPlaceholder').width()*100)}%`;
-        }
-        
-        return !interceptionStatus; // Return the inversed value (which will provide a value that is practical to us).
+    let interceptionStatus = (el1DistanceTop < el2Offset.top || el1Offset.top > el2DistanceTop || el1DistanceLeft < el2Offset.left || el1Offset.left > el2DistanceLeft); // Returns boolean value, if an interception is detected through the comparison and or (||) operators.
+    
+    // If !interceptionStatus is truthy (i.e. interceptionStatus is falsey), acknowledges the player has been hit, and calls 'roundOfGame' function.
+    if (!interceptionStatus && !bool) {
+        roundOfGame();
+    } else if (!interceptionStatus && bool && powerUp.style.display == 'block') { // Third condition is so the invisible pickUp still wouldn't give 2 lives.
+        powerUpPickup();
     }
+}
+
+
+function powerUpPickup() {
+    livesVar.innerHTML =`Resistance: ${(_numberOfLives+=5)}`;
+    scoreVar.innerHTML = `Score: ${(_scoreNo+=80)}`;
+    powerUp.style.display = 'none';
+    powerUp.style.top = `${Math.floor(Math.random() * $('#projPlaceholder').height()/$('#projPlaceholder').height()*100)}%`;
+    powerUp.style.left = `${Math.floor(Math.random() * $('#projPlaceholder').width()/$('#projPlaceholder').width()*100)}%`;
 }
 
 
@@ -437,7 +382,7 @@ class enemyObject {
     _generateNewPosition() {
         // Works out available area dimensions to plot a movement for the object, from the ascertained container size, after subtracting the size of the generated object itself.
         let containerSize = this._getContainerDimensions(); // An object is returned by the getter method, representing area values (height, width).
-        let availableHeight = containerSize.height - 45; // Subtract height of the object/shape for y-axis.
+        let availableHeight = containerSize.height; // Subtract height of the object/shape for y-axis.
         let availableWidth = containerSize.width;
         // Produces a random x and a random y coordinate from the deduced available area, which is rounded down to the nearest integer.
         var y = Math.floor(Math.random() * availableHeight);
@@ -471,6 +416,7 @@ class enemyObject {
             return;
         }
         this.$object.style.display = 'block';
+        document.getElementById('imageBall').style.display = 'block';
         // Set the right starting CSS attributes of our object.
         this.$object.willChange = 'transform'; // Precaution the browser/UA (userAgent) of the expected change on our object, for optimization.<custom-ident> (an arbitrary value, author defined identifier, not recognized as a pre-defined keyword.
         this.$object.pointerEvents = 'auto';

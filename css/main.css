@@ -17,6 +17,7 @@ select {
     box-shadow: 0 1.3vh black;
     font-family: 'Stalinist One';
     font-size: 2vh;
+    margin-bottom: 2px;
 }
 
 select:hover {
@@ -37,6 +38,7 @@ select:hover {
     height: 80vh;
     width: 90vw;
     background-color: #7e000a;
+    color: black;
     font-size: 2.4vh;
     cursor: crosshair;
     position: relative;
@@ -57,8 +59,10 @@ select:hover {
     width: 5%;
     height: 5%;
     display: none;
-    left: 80%;
-    top: 80%;
+    left: 95%;
+    top: 95%;
+    background-color: #81fff54f;
+    border-radius: 44%;
 }
 
 #powerUp {
@@ -88,7 +92,7 @@ select:hover {
     width: 75%;
 }
 
-img#objectA {
+img[id*="object"] {
     width: 10%;
     height: 10%;
     position: absolute;
@@ -97,17 +101,7 @@ img#objectA {
     margin: 0;
     border-radius: 50%;
     pointer-events: none;
-}
-
-img#objectB {
-    width: 10%;
-    height: 10%;
-    position: absolute;
-    z-index: 5;
-    display: none;
-    margin: 0;
-    border-radius: 50%;
-    pointer-events: none;
+    background-color: #0f1de75b;
 }
 
 .inGameText {
@@ -141,8 +135,8 @@ img#objectB {
     width: 20vw;
     font-family: 'Stalinist One';
     font-size: 2.4vh;
-    margin-top: 4px;
-    margin-bottom: 4px;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 /* 'Start' version of the 'startButton' (hovering effects). */
@@ -197,7 +191,6 @@ img[id*="imagePlayer"] {
     width: 8%;
     z-index: 4;
     display: none;
-    border: 3px dotted #1b03f3;
     border-radius: 50%;
     background-color: #bd0d007e;
 }

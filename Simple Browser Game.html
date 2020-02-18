@@ -4,8 +4,6 @@
 Notes/To-Do:-
 =================================================================================================================================
 
-Use an array in the Hex/RGB Generation Function/Block?
-
 Update/Check/Rewrite all comments; Sort out getter/setter terminology, and property/attribute terminology (position:absolute; / property:attribute;), in the comments. Plus read all comments. A SEVERE RE-WRITE OF COMMETNS IS NEEDED!!!
 
 Replace document.getElementById('') & document.getElementsByClassName('') with $('#') & $('.')[n]:
@@ -16,23 +14,22 @@ Replace document.getElementById('') & document.getElementsByClassName('') with $
 	alert(document.getElementById('abc123').innerHTML);
 	*/.
 
-Maybe add a variation to the game: pick-up the diamond and drop: $('#imageBall').draggable();
-
-Make use of canvas html5 tag?
-
-Certain distance amount (a goal amount) adds new random set of lives to exisitng (each time distance goal changes).
-
-Using interception check function: check for alarms/enemies and guards colliding to then have pop up/flash side text/action log div that generates story like text, e.g. guard a point A etc. [interactive text].
-
-Add an overtop hue? So add a new html div, wrapped around the whole DOM body, with a non-fully opaque color applied (opacity 70%?) to the background color of it.
 
 Pass through some variables at parameters, so there's not as many Global Variables.
 
-Sort out all CSS (classes/ID's use, and any unecessarily repeated properties).
+Sort All Variables out/scoping/closure.
 
-On quit/start button: Set better diamond starting location. (Supposedly already done, or set fundation for it?!).
+Sort out all CSS (classes/ID's used, and any unecessarily repeated properties etc.), important - in a bad way.
+
+Score breakdown/output log - to show calcs etc.?
 
 Container height/width methods are repeated - change this (in js file).
+
+put a cap on resistance amount of 100?
+
+fix score calculations? - seems to set to 0, even when a higher score, but will still set high score to actual score. Display updating to 0 too soon.
+
+fewer enemy nodes/ new more spread arrangements.
 -->
 
 <html>
@@ -77,7 +74,7 @@ Container height/width methods are repeated - change this (in js file).
 			</nav>
 			
 			<!-- Constituent parts to the game, inserted into the DOM structure. -->
-			<img id="objectA" src="resources/police.png" alt="CopA">
+			<img id="objectA" src="resources/stakeout.png" alt="CopA">
 			<img id="objectB" src="resources/stakeout.png" alt="CopB">
 			<img id="stageBackground" src="resources/heist_background_light.jpg" alt="">
 			<img id="powerUp" src="resources/transfer.png" alt="UP">
