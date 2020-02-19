@@ -287,7 +287,7 @@ function timersProcessing(val) {
             if (gameInSession) for (let i=0; i < $('.enemy').length; i++) {interceptionCheck($('#playerIcon'), $(`#imageEnemy${[i]}`));}//Each image.
             if (gameInSession) interceptionCheck($('#playerIcon'), $('#objectA'));
             if (twoGuards && gameInSession) interceptionCheck($('#playerIcon'), $('#objectB'));
-            if (!prop && gameInSession) interceptionCheck($('#playerIcon'), $('#powerUp'), true);
+            if (!_prop && gameInSession) interceptionCheck($('#playerIcon'), $('#powerUp'), true);
         }, 150);
 
         //Interval to randomly spawn the power-up location, and periodically display in-game.
