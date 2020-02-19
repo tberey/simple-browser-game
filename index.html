@@ -1,0 +1,127 @@
+<!-- DESCRIPTION / NOTES / PLANNING:
+
+---------------------------------------------------------------[Version 1.0+]-----------------------------
+
+A simple browser game (ES6+), themed around holding onto the diamond stolen in a heist. Users are required to survive for as long as possible, avoiding the patrolling guards and arrest points, while grabbing further loot that appears. All amount to a higher score, and the aim is to achieve as high a score as possible.
+See "README.md" for further information.
+
+There are 33 functions in the JavaScript file; "main.js".
+Function with the largest signature take 3 arguments, while the median is 0.
+Largest function has 14 statements in it, while the median is 4.
+The most complex function has a cyclomatic complexity value of 10, while the median is 1.
+
+
+============================================================================================
+
+Remote/Repo Name: https://github.com/tberey/simple-browser-game
+
+Branch Name: https://github.com/tberey/simple-browser-game/tree/master
+
+============================================================================================
+
+
+1) Add a Resistance upper limit on the total.
+
+2) Add an Output log, to show a score breakdown and the calcs etc.
+
+3) Add an online leaderboard (accessible to any and all users from wherever they are, which if they achieve a high enough score, will be added onto, or simply view).
+
+3) Check and (if required), add better mobile/table support, with Safari and Android Browsers.
+
+Note: USE SELENIUM FOR CROSS USER AGENT TESTING.
+-->
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- Set a responsively scaled viewport for the user's window size, and assigns some Metadata. Also sets favicon. -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="icon" href="favicon.png">
+		<title>The Heist Game</title>
+		<meta name="author" content="Tom B">
+		<meta name="description" content="Project 1, HTML, CSS, JavaScript, jQuery">
+		
+		<!-- Load Google Fonts. -->
+		<link href='https://fonts.googleapis.com/css?family=Stalinist One' rel='stylesheet'>
+		
+		<!-- Load jQuery UI Stylesheets (Google CDN). -->
+		<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet">
+		
+		<!-- External CSS styling -->
+		<link rel="stylesheet" href="css/main.css">
+	</head>
+	
+	<!-- The main Body HTML DOM structure. -->
+	<body>
+		<!-- Title Bar Area -->
+		<div style="color:white;"><p>Current Date & Time: <b><span id="dateTime"></span><em style="float:right;"><u>The Heist Game</u></em></b></p></div>
+		
+		<!-- The jQuery message/alert box pop-up. -->
+		<div id="dialog" title="New Game"><p>GO!</p></div>
+		
+		<!-- The following id block is the project/game container work space, with all nested constituent elements within. -->
+		<div id="projectContainerArea">
+			
+			<!-- Game heads up display text. -->
+			<nav class="inGameText">
+				<p id="lives"></p>
+				<p id="distance"></p>
+				<p id="score"></p>
+				<p id="timer"></p>
+			</nav>
+			
+			<!-- Constituent images/icons for the game -->
+			<img id="stageBackground" src="resources/heist_background_light.jpg" alt="">
+			<img id="objectA" src="resources/stakeout.png" alt="CopA">
+			<img id="objectB" src="resources/stakeout.png" alt="CopB">
+			<img id="powerUp" src="resources/transfer.png" alt="UP">
+			<img id="playerIcon" src="resources/diamond.png" alt="O">
+			<nav>
+				<img id="imageEnemy0" class="enemy" src="resources/handcuff.png" alt="E0">
+				<img id="imageEnemy1" class="enemy" src="resources/handcuff.png" alt="E1">
+				<img id="imageEnemy2" class="enemy" src="resources/handcuff.png" alt="E2">
+				<img id="imageEnemy3" class="enemy" src="resources/handcuff.png" alt="E3">
+				<img id="imageEnemy4" class="enemy" src="resources/handcuff.png" alt="E4">
+				<img id="imageEnemy5" class="enemy" src="resources/handcuff.png" alt="E5">
+				<img id="imageEnemy6" class="enemy" src="resources/handcuff.png" alt="E6">
+				<img id="imageEnemy7" class="enemy" src="resources/handcuff.png" alt="E7">
+				<img id="imageEnemy8" class="enemy" src="resources/handcuff.png" alt="E8">
+				<img id="imageEnemy9" class="enemy" src="resources/handcuff.png" alt="E9">
+			</nav>
+		</div>
+		
+		<!-- High score and the Button/DropDowns placement. -->
+		<div class="outGameText">
+			<b id="highScore"></b>
+			</br>
+			<select id="formationField">
+				<option selected="selected" value="541">Layout 1</option>
+				<option value="343">Layout 2</option>
+				<option value="random">Randomise(Test/Alpha)</option>
+			</select>
+			<select id="guardsField">
+				<option selected="selected" value=0>1x Guard</option>
+				<option value=1>2x Guards</option>
+			</select>
+			<button class="startQuitButton">Go!</button>
+			<select id="speedInputField">
+				<option selected="selected" value=100>Very Slow</option>
+				<option value="200">Slow</option>
+				<option value="500">Medium</option>
+				<option value="750">Fast</option>
+				<option value="1000">Very Fast</option>
+			</select>
+		</div>
+
+		<!-- Load the jQuery & jQueryUI Libraries (Google CDN). -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+		<!-- Call main.js, my external JavaScript script. -->
+		<script src="scripts/main.js"></script>
+
+		<!-- Legals bits - source artist mentions for materials used. -->
+		<sup style="color:white;"></br></br><div>All icons images made by the following artists:<br> <a href="https://www.flaticon.com/authors/roundicons" title="Roundicons">Roundicons</a>  </a></div><div><a href="https://www.flaticon.com/authors/flat-icons" title="Flat Icons">Flat Icons</a> </a></div><div><a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> </a></div><div><a href="https:www.flaticon.com/authors/srip" title="srip">srip</a><br>from <a href="https://www.flaticon.com" title="Flaticon">www.flaticon.com</a></div><p><a href="https://wallpapersafari.com/jail-backgrounds/">Jail Backgrounds</a></p></sup>
+	</body>
+</html>

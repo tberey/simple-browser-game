@@ -1,10 +1,7 @@
-html, body {
-    font-family: 'Stalinist One' !important;
-}
-
 body {
     background-image: url("bars-background.jpg");
     background-repeat: repeat;
+    font-family: 'Stalinist One' !important;
 }
 
 select {
@@ -13,11 +10,10 @@ select {
     border-radius: 20px;
     background-color: #060870;
     color: white;
-    padding-left: 1.5%;
+    padding-left: 2%;
     box-shadow: 0 1.3vh black;
     font-family: 'Stalinist One';
     font-size: 2vh;
-    margin-bottom: 2px;
 }
 
 select:hover {
@@ -26,14 +22,15 @@ select:hover {
 
 #speedInputField {
     width: 100%;
+    margin-top: 16px;
 }
 
 #formationField{
-    width: 20%;
-    margin-left: 7%;
+    width: 25%;
+    margin-left: 5%;
 }
 
-#projPlaceholder {
+#projectContainerArea {
     margin: 0 auto;
     height: 80vh;
     width: 90vw;
@@ -51,7 +48,7 @@ select:hover {
     user-select: none; /* Chrome, Opera and Firefox. */
 }
 
-#imageBall {
+#playerIcon {
     position: absolute;
     pointer-events: none;
     z-index: 3;
@@ -118,10 +115,8 @@ img[id*="object"] {
 }
 
 /* Dynamic Button Functionality begins here. Adds styling for when the button is interacted with, i.e. When the mouse hovers over it etc. */
-.startButton {
+.startQuitButton {
     display: inline-block;
-    padding-bottom: 1vh;
-    padding-top: 1vh;
     cursor: pointer;
     text-align: center;
     outline: none;
@@ -135,32 +130,30 @@ img[id*="object"] {
     width: 20vw;
     font-family: 'Stalinist One';
     font-size: 2.4vh;
-    margin-top: 2px;
-    margin-bottom: 2px;
 }
 
-/* 'Start' version of the 'startButton' (hovering effects). */
-.startButton:hover {
+/* 'Start' version of the 'startQuitButton' (hovering effects). */
+.startQuitButton:hover {
     background-color: #1b03f3;
 }
 
-/* 'Start' version of the 'startButton'. */
-.startButton:active {
+/* 'Start' version of the 'startQuitButton'. */
+.startQuitButton:active {
     background-color: #060870;
     transform: translateY(4px);
 }
 
-/* 'Quit' version of the 'startButton'. */
+/* 'Quit' version of the 'startQuitButton'. */
 button[label="quitB"] {
     background-color: #b10c00;
 }
 
-/* 'Quit' version of the 'startButton' (hovering effects). */
+/* 'Quit' version of the 'startQuitButton' (hovering effects). */
 button:hover[label="quitB"] {
     background-color: rgb(105, 1, 1);
 }
 
-.startButton:active[label="quitB"] {
+.startQuitButton:active[label="quitB"] {
     background-color: #b10c00;
     transform: translateY(4px);
 }
@@ -183,8 +176,8 @@ div[id="dialog"] {
     font-family: 'Stalinist One';
 }
 
-/* Targets all img tags that have an id at least inclusive of the string 'imagePlayer'. */
-img[id*="imagePlayer"] {
+/* Targets all img tags that have an id at least inclusive of the string 'imageEnemy'. */
+img[id*="imageEnemy"] {
     position: absolute;
     margin: 0;
     height:8%;
@@ -195,6 +188,6 @@ img[id*="imagePlayer"] {
     background-color: #bd0d007e;
 }
 
-img:hover[id*="imagePlayer"] {
+img:hover[id*="imageEnemy"] {
     background-color: #ff0000;
 }
