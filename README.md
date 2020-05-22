@@ -1,15 +1,16 @@
-# Simple Browser Skill Game
+# Browser Skill & Reaction Game
 
+### A mouse/touch based browser game (ES6+), themed around holding onto the diamond stolen in a heist. Users are required to survive for as long as possible, avoiding the patrolling guards and arrest points, while grabbing further loot that randomly appears. All amount to a higher score, and the aim is to achieve as high a score as possible before your resistance to arrest wears down. As usual, designed with maximum compatibility in mind between modern browsers, and mobile devices. On desktop/laptops or any device with a mouse input, this game functions with the diamond following the user's mouse when it is stationary, so to guide it with precaution but present a challenge. Similarly, yet slightly different, on a touch/mobile device, a user must press the point on the screen to where they want the diamond to travel, in the gaming area/space.
 
-
-### A browser game (ES6+), themed around holding onto the diamond stolen in a heist. Users are required to survive for as long as possible, avoiding the patrolling guards and arrest points, while grabbing further loot that randomly appears. All amount to a higher score, and the aim is to achieve as high a score as possible before your resistance to arrest wears down. As usual, designed with maximum compatibility in mind between modern browsers, and mobile devices. On desktop/laptops or any device with a mouse input, this game functions with the diamond following the user's mouse when it is stationary, so to guide it with precaution but present a challenge. Similarly, yet slightly different, on a touch/mobile device, a user must press the point on the screen to where they want the diamond to travel, in the gaming area/space.
+<br>
 
 ***
 
 ##### <i>This is a stand-alone repo, that you simply need to download, extract and then open from the root html file ("index.html"), in any browser. Not pre-ES6 compatible, although easy to adapt down: You will find the random object mover constructor-function/prototyping JS script in the 'bitesize-code' repo, which is a big chunk of the ES6 code used in this project (class constructor block)- from then you can adapt down by removing any remaining ES6 syntax. ES6 is the ECMAScript 2015 'big' release.
 
 ***
-***
+
+<br><i>
 
 |Version| Changes|
 |:---|:---|
@@ -20,3 +21,4 @@
 |Version 0.1.2 [2020-02-18]|<ul><li>Replace not matching patrolling guard image, with matching.</li><li>Update the way total score and lives are calculated by generally increasing all values (including increasing the amount you lose).</li><li>Rebrand lives to 'Resistance', as in resisting arrest.</li><li>Minor css and html files changes.</li><li>General Bug fixes.</li><li>Update README.md.</li></ul>|
 |Version 1.0.0 [2020-02-19]|<ul><li>1.0.0 Release!!!</li><li>General bug fixes and tidy up.</li><li>New map/screen arrest point layouts.</li><li>Formatting, restructuring and comment overhaul.</li><li>CSS and HTML changes.</li><li>Tested to work on iphone/ipad, ios 11 and android galaxy S9.</li><li>Update README.md.</li></ul>|
 |Version 1.0.1 [2020-03-09]|<ul><li>Rename css and script files.</li><li>Update README.md.</li></ul>|
+|Version 1.0.2 [2020-05-22]|<ul><li>Renaming repo and description update.</li><li>Update README.md.</li></ul>|
